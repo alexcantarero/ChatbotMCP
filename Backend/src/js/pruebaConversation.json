@@ -1,0 +1,17 @@
+{
+    "id": 1,
+    "conversationDateStarted": "2024-10-01T11:00:00Z",
+    "messages": [
+        {
+            "role": "user",
+            "dateTime": "2024-10-01T13:00:00Z",
+            "content": "Hola, ¿cómo estás?"
+        },
+        {
+            "role": "assistant",
+            "dateTime": "2024-10-01T13:00:01Z",
+            "content": "¡Hola! Estoy bien, gracias. ¿En qué puedo ayudarte hoy?"
+        }
+
+    ]
+}
