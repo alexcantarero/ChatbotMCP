@@ -1,0 +1,96 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>Chat with Gemini</h2>
+
+    <button (click)="createNewConversations()" class="new-conversations-button">New conversations</button>
+  </div>
+  
+  <div class="message-input">
+    <input 
+      type="text" 
+      [(ngModel)]="messageText" 
+      placeholder="Write your message here..."
+      (keyup.enter)="sendMessage()"
+      class="message-field"
+    />
+    <button (click)="sendMessage()" class="send-button">Send</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="sk-wave">
+      <div class="sk-wave-rect"></div>
+      <div class="sk-wave-rect"></div>
+      <div class="sk-wave-rect"></div>
+      <div class="sk-wave-rect"></div>
+      <div class="sk-wave-rect"></div>
+    </div>
+    Sending message...
+  </div>
+    <div class="responses-container">
+        <div class="response-container-no-mcp">
+            <div class="response-section">
+              <h3>NO MCP</h3>
+              <div *ngFor="let msg of messagesNoMCP; let i = index" class="message-wrapper">
+                <div class="message-header">
+                  <div class="message-counter">Response {{ i + 1 }}</div>
+                  <div class="message-usage-container" *ngIf="msg.usage">
+                    <div class="message-usage usage-input">
+                      <span class="usage-label">Input:</span>
+                      <span class="usage-value">{{ msg.usage.input_tokens }}</span>
+                    </div>
+                    <div class="message-usage usage-output">
+                      <span class="usage-label">Output:</span>
+                      <span class="usage-value">{{ msg.usage.output_tokens }}</span>
+                    </div>
+                    <div class="message-usage usage-total">
+                      <span class="usage-label">Total:</span>
+                      <span class="usage-value">{{ msg.usage.total_tokens }}</span>
+                    </div>
+                      <div class="message-usage usage-executionTime">
+                      <span class="usage-label">Exec.time:</span>
+                      <span class="usage-value">{{ msg.usage.execution_time }} s</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="response-message">
+                  <markdown [data]="msg.respuesta"></markdown>
+                </div>
+                <hr>
+              </div>
+            </div>
+        </div>
+        
+        <div class="response-container-mcp">
+            <div class="response-section">
+              <h3> MCP</h3>
+              <div *ngFor="let msg of messagesMCP; let i = index" class="message-wrapper">
+                <div class="message-header">
+                  <div class="message-counter">Respuesta {{ i + 1 }}</div>
+                  <div class="message-usage-container" *ngIf="msg.usage">
+                    <div class="message-usage usage-input">
+                      <span class="usage-label">Input:</span>
+                      <span class="usage-value">{{ msg.usage.input_tokens }}</span>
+                    </div>
+                    <div class="message-usage usage-output">
+                      <span class="usage-label">Output:</span>
+                      <span class="usage-value">{{ msg.usage.output_tokens }}</span>
+                    </div>
+                    <div class="message-usage usage-total">
+                      <span class="usage-label">Total:</span>
+                      <span class="usage-value">{{ msg.usage.total_tokens }}</span>
+                    </div>
+                    <div class="message-usage usage-executionTime">
+                      <span class="usage-label">Exec.time:</span>
+                      <span class="usage-value">{{ msg.usage.execution_time }} s</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="response-message">
+                  <markdown [data]="msg.respuesta"></markdown>
+                </div>
+                <hr>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

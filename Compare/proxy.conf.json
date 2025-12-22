@@ -1,0 +1,18 @@
+{
+  "/apiBase": {
+    "target": "http://localhost:3001",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/apiBase": ""
+    }
+  },
+  "/api": {
+    "target": "http://localhost:5678",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/webhook/a7dfe61c-9a5f-493a-8192-baf72e9acac0"
+    }
+  }
+}
