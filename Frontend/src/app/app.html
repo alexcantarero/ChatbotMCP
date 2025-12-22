@@ -1,0 +1,37 @@
+<h1>Travel AI Assistant</h1>
+
+<!-- Si no estoy logueado... -->
+<div *ngIf="!loggedIn" class="login-container">
+    <form (ngSubmit)="login()" novalidate>
+        <div class="field">
+            <label for="username">User</label>
+            <input id="username" name="username" type="text" [(ngModel)]="username" placeholder="user" />
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" [(ngModel)]="password" placeholder="password" />
+        </div>
+        <div class="actions">
+            <button type="submit">Log in</button>
+            <button type="button" (click)="signIn()">Create account</button>
+        </div>
+
+        <div *ngIf="loginError" class="error">{{ loginError }}</div>
+    </form>
+	
+</div>
+<!-- Si estoy logueado... -->
+<div *ngIf="loggedIn" class="app-with-topbar">
+		<div class="topbar">
+				<div class="user-row">
+					<span class="user-label">User: {{ username }}</span>
+					<span class="token-label" *ngIf="token">Token: {{ maskedToken }}</span>
+					<button *ngIf="token" type="button" class="copy-token" (click)="copyToken()">Copiar</button>
+				</div>
+				<div class="topbar-actions">
+					<button class="logout" (click)="logout()">Log out</button>
+				</div>
+		</div>
+	<!-- Contenido de los chats, que se muestra sólo si estoy logueado -->
+	<app-chatservice></app-chatservice>
+</div>

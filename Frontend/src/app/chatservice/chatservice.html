@@ -1,0 +1,104 @@
+<div class="app-container">
+  <!-- Modal para crear/editar conversación -->
+  <div class="modal-overlay" *ngIf="showNewConversationModal" (click)="cancelNewConversation()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ windowTitle }}</h3>
+        <button class="close-btn" (click)="cancelNewConversation()">×</button>
+      </div>
+      <div class="modal-body">
+        <label for="conversation-name">Conversation Name:</label>
+        <input 
+          id="conversation-name"
+          type="text" 
+          [(ngModel)]="newConversationTitle" 
+          placeholder="Enter the name of the conversation ..."
+          maxlength="30"
+          class="conversation-name-input"
+          (keyup.enter)="actionToDo()"  
+          (keyup.escape)="cancelNewConversation()">
+      </div>
+      <div class="modal-footer">
+        <button class="cancel-modal-btn" (click)="cancelNewConversation()">Cancel</button>
+        <button class="create-modal-btn" (click)="actionToDo()" [disabled]="!newConversationTitle.trim()">
+          Accept
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra lateral de conversaciones -->
+  <aside class="conversations-sidebar">
+    <div class="sidebar-header">
+      <h3>Conversations</h3>
+      <button class="new-conversation-btn" (click)="showCreateNewConversationModal()" title="Nueva conversación">
+        +
+      </button>
+    </div>
+    
+    <div class="conversations-list">
+      <div 
+        *ngFor="let conversation of conversations; let i = index" 
+        class="conversation-item"
+        [class.active]="isActive(conversation.id)"
+        (click)="selectConversation(conversation.id)"
+      >
+        <button *ngIf="isActive(conversation.id)" class="delete-conversation-btn" title="Delete" (click)="deleteConversation(conversation.id, $event)">
+          ×
+        </button>
+        <div class="conversation-info">
+          <div class="conversation-title">{{ conversation.title }}</div>
+          <div class="conversation-date">Last message sent: {{ formatDate(conversation.date) }}</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Chat -->
+  <div class="chat-app">
+    <header>
+      <h1>{{ conversations.length > 0 ? (getCurrentConversationTitle()) : 'Chat' }}</h1>
+      <button class="edit-conversation-title" (click)="showEditConversationTitleModal()" title="Edit Title">
+        ✎
+      </button>
+    </header>
+
+    <!-- Sección de mensajes -->
+    <main class="messages" #messagesContainer>
+      <div *ngFor="let m of messages; let i = index" [class.user]="m.role === 'user'" [class.assistant]="m.role === 'assistant'" class="message">
+        <div class="bubble">
+          <!-- Mostrar el texto sin el option = y renderizar el gráfico en concreto -->
+          <div *ngIf="hasChart(m.text)">
+            <markdown [data]="m.text.substring(0, m.text.indexOf('option = '))"></markdown>
+            <div #chartContainer class="chart-container" [attr.data-index]="i"></div>
+            <!-- Este chartContainer se almacenará en un array en chatservice.ts-->
+            <!-- El attr.data-index (el índice del mensaje) se usará para identificar el contenedor del gráfico -->
+          </div>
+          
+          <!-- Si NO tiene gráfico, mostrar todo el texto sin más -->
+          <div *ngIf="!hasChart(m.text)">
+            <!-- Si tiene mapa, mostrar el texto sin el objeto hotels -->
+            <div *ngIf="hasMap(m.text)">
+            <markdown [data]="m.text.substring(0, m.text.indexOf('results = '))"></markdown>
+                <div #mapContainer class="map-container" [attr.data-index]="i"></div>
+            </div>
+            <div *ngIf="!hasMap(m.text)">
+                <markdown [data]="m.text"></markdown>
+            </div>    
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="message assistant">
+        <div class="bubble">...</div>
+      </div>
+    </main>
+
+    <!-- Barra de escritura -->
+    <footer class="composer">
+      <div class="error" *ngIf="error">{{ error }}</div>
+      <textarea [(ngModel)]="message" (keyup.enter)="sendMessage(activeConversationId())" placeholder="Write a message..." rows="2"></textarea>
+      <button (click)="sendMessage(activeConversationId())" [disabled]="loading">Send</button>
+    </footer>
+  </div>
+</div>

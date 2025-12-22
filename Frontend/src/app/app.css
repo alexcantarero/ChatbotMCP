@@ -1,0 +1,86 @@
+
+.login-container {
+	max-width: 360px;
+	margin: 12px auto;
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	background: #fafafa;
+}
+.login-container .field {
+	margin-bottom: 8px;
+}
+.login-container label {
+	display: block;
+	font-size: 0.9rem;
+	margin-bottom: 4px;
+}
+.login-container input[type="text"],
+.login-container input[type="password"] {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+.login-container .actions {
+	margin-top: 8px;
+	text-align: center;
+	gap: 8px;
+	display: flex;
+	justify-content: center;
+}
+.login-container button {
+	padding: 8px 12px;
+	border: none;
+	border-radius: 4px;
+	background: #1976d2;
+	color: white;
+	cursor: pointer;
+}
+.login-container .error {
+	margin-top: 8px;
+	color: #b00020;
+}
+.login-container .hint {
+	margin-top: 8px;
+	font-size: 0.85rem;
+	color: #666;
+}
+.topbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 12px;
+	background: #f3f3f3;
+	border-bottom: 1px solid #e0e0e0;
+}
+.topbar .user-label { font-weight: 600; }
+.topbar .logout {
+	padding: 6px 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	background: white;
+	cursor: pointer;
+}
+
+.user-row {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+.token-label {
+	font-family: monospace;
+	background: #fff;
+	padding: 3px 6px;
+	border-radius: 4px;
+	border: 1px solid #e6e6e6;
+}
+.copy-token {
+	padding: 6px 8px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	background: #fff;
+	cursor: pointer;
+}
+
