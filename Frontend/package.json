@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --port 4200 --base-href /frontend/ --serve-path /frontend/",
+    "start": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0",
     "start:dev": "ng serve --proxy-config proxy.conf.json --open",
     "build": "ng build --base-href /frontend/",
     "watch": "ng build --watch --configuration development",
