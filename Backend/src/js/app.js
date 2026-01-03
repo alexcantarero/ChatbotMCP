@@ -463,7 +463,7 @@ async function ask_gemini(message, conversationId, token, tag) {
     }
 }
 
-app.listen(PORT, async () => {
+app.listen(PORT,'0.0.0.0', async () => {
     console.log("Servidor iniciado...");
     try {
         await deleteOutdatedConversations(1);
