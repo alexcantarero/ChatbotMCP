@@ -464,6 +464,11 @@ async function ask_gemini(message, conversationId, token, tag) {
 }
 
 app.listen(PORT, async () => {
-  console.log("Escuchando en http://localhost:3001");
-  await deleteOutdatedConversations(1);
+    console.log("Servidor iniciado...");
+    try {
+        await deleteOutdatedConversations(1);
+        console.log("Limpieza completada con éxito");
+    } catch (error) {
+        console.error("Error en la limpieza inicial:", error);
+    }
 });
